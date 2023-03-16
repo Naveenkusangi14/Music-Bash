@@ -46,12 +46,12 @@ class _PlayerState extends State<Player> {
     
   }
 @override
-  void dispose() {
-    // TODO: implement dispose
-    _assetsAudioPlayer.dispose();
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   _assetsAudioPlayer.dispose();
     
-    super.dispose();
-  }
+  //   super.dispose();
+  // }
   Audio find(List<Audio> source, String fromPath) {
     return source.firstWhere((element) => element.path == fromPath);
   }
@@ -60,99 +60,121 @@ class _PlayerState extends State<Player> {
   Widget build(BuildContext context) {
    
     return Scaffold(
-      appBar: AppBar(),
+     
         body: SafeArea(
           child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                
-                StreamBuilder<Playing?>(
-                    stream: _assetsAudioPlayer.current,
-                    builder: (context, playing) {
-                      if (playing.data != null) {
-                        final myAudio =
-                            find(audios, playing.data!.audio.assetAudioPath);
-
-                        return Image.network(
-                              myAudio.metas.image!.path,
-                              height:
-                                  MediaQuery.of(context).size.height /
-                                      1.3,
-                              width:
-                                  MediaQuery.of(context).size.width,
-                              fit: BoxFit.cover,
-                            );
-                      }
-                    return SizedBox(height: 0,);
-                    }),
-              
-                const SizedBox(
-                  height: 20,
-                ),
-                _assetsAudioPlayer.builderRealtimePlayingInfos(
-                          builder: (context, RealtimePlayingInfos? infos) {
-                        if (infos == null) {
-                          return const SizedBox();
-                        }
-                        return Column(
-                          children: [
-                            PositionSeekWidget(
-                              currentPosition: infos.currentPosition,
-                              duration: infos.duration,
-                              seekTo: (to) {
-                                _assetsAudioPlayer.seek(to);
-                              },
-                            ),
-                  
-                          ],
-                        );
-                      }),
-                _assetsAudioPlayer.builderCurrent(
-                    builder: (context, Playing? playing) {
-                  return Column(
-                    children: <Widget>[
-                      _assetsAudioPlayer.builderLoopMode(
-                        builder: (context, loopMode) {
-                          return PlayerBuilder.isPlaying(
-                              player: _assetsAudioPlayer,
-                              builder: (context, isPlaying) {
-                                return PlayingControls(
-                                  loopMode: loopMode,
-                                  isPlaying: isPlaying,
-                                  isPlaylist: false,
-                                  onStop: () {
-                                    _assetsAudioPlayer.stop();
-                                  },
-                                  // toggleLoop: () {
-                                  //   _assetsAudioPlayer.toggleLoop();
-                                  // },
-                                  onPlay: () {
-                                    _assetsAudioPlayer.playOrPause();
-                                  },
-                                  onNext: () {
-
-                                    _assetsAudioPlayer.next(
-                                        keepLoopMode:
-                                            true /*keepLoopMode: false*/);
-
-                                   },
-                                   onPrevious: () {
-                                   _assetsAudioPlayer.previous(
-                                        /*keepLoopMode: false*/);
-                                   },
+            child: Stack(
+              children: 
+                [Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    
+                    StreamBuilder<Playing?>(
+                        stream: _assetsAudioPlayer.current,
+                        builder: (context, playing) {
+                          if (playing.data != null) {
+                            final myAudio =
+                                find(audios, playing.data!.audio.assetAudioPath);
+            
+                            return Image.network(
+                                  myAudio.metas.image!.path,
+                                  height:
+                                      MediaQuery.of(context).size.height /
+                                          1.3,
+                                  width:
+                                      MediaQuery.of(context).size.width,
+                                  fit: BoxFit.cover,
                                 );
-                              });
-                        },
-                      ),
+                          }
+                        return SizedBox(height: 0,);
+                        }),
+                  
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    _assetsAudioPlayer.builderRealtimePlayingInfos(
+                              builder: (context, RealtimePlayingInfos? infos) {
+                            if (infos == null) {
+                              return const SizedBox();
+                            }
+                            return Column(
+                              children: [
+                                PositionSeekWidget(
+                                  currentPosition: infos.currentPosition,
+                                  duration: infos.duration,
+                                  seekTo: (to) {
+                                    _assetsAudioPlayer.seek(to);
+                                  },
+                                ),
                       
-                    ],
-                  );
-                }),
-                const SizedBox(
-                  height: 20,
+                              ],
+                            );
+                          }),
+                    _assetsAudioPlayer.builderCurrent(
+                        builder: (context, Playing? playing) {
+                      return Column(
+                        children: <Widget>[
+                          _assetsAudioPlayer.builderLoopMode(
+                            builder: (context, loopMode) {
+                              return PlayerBuilder.isPlaying(
+                                  player: _assetsAudioPlayer,
+                                  builder: (context, isPlaying) {
+                                    return PlayingControls(
+                                      loopMode: loopMode,
+                                      isPlaying: isPlaying,
+                                      isPlaylist: false,
+                                      onStop: () {
+                                        _assetsAudioPlayer.stop();
+                                      },
+                                      // toggleLoop: () {
+                                      //   _assetsAudioPlayer.toggleLoop();
+                                      // },
+                                      onPlay: () {
+                                        _assetsAudioPlayer.playOrPause();
+                                      },
+                                      onNext: () {
+            
+                                        _assetsAudioPlayer.next(
+                                            keepLoopMode:
+                                                true /*keepLoopMode: false*/);
+            
+                                       },
+                                       onPrevious: () {
+                                       _assetsAudioPlayer.previous(
+                                            /*keepLoopMode: false*/);
+                                       },
+                                    );
+                                  });
+                            },
+                          ),
+                          
+                        ],
+                      );
+                    }),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  ],
                 ),
+                  Positioned(
+                left: 10,
+                top: 20,
+                child: InkWell(
+                  onTap: () => Navigator.pop(context),
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30)),
+                    child: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
               ],
             ),
           ),

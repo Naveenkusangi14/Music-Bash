@@ -1,8 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:spotify/Player/Player.dart';
 import 'package:spotify/SongsController/SongsController.dart';
+
 class SecondScreen extends StatefulWidget {
   SecondScreen({super.key, required this.url, required this.album});
   String url;
@@ -14,8 +16,8 @@ class SecondScreen extends StatefulWidget {
 class _SecondScreenState extends State<SecondScreen> {
   @override
   Widget build(BuildContext context) {
-  final provider = Provider.of<SongsController>(context);
-   
+    final provider = Provider.of<SongsController>(context);
+
     return Scaffold(
         extendBodyBehindAppBar: false,
         body: SafeArea(
@@ -70,43 +72,35 @@ class _SecondScreenState extends State<SecondScreen> {
                     ),
                   ),
                   SliverList(
-                      
                     delegate: SliverChildBuilderDelegate(
-                        childCount: provider.songs.length,
-                      (context, index) {
-                        final data = provider.songs[index];
+                        childCount: provider.songs.length, (context, index) {
+                      final data = provider.songs[index];
                       if ((data.album == widget.album)) {
                         final songList = [];
                         final titleList = [];
                         data.song.map((e) {
                           songList.add(e);
-                           
                         }).toList();
-                         data.title.map((e) {
+                        data.title.map((e) {
                           titleList.add(e);
-                           
                         }).toList();
                         print(songList.length);
                         return SizedBox(
-                         
                           child: ListView.builder(
                             itemCount: songList.length,
-                          shrinkWrap: true,
+                            shrinkWrap: true,
                             itemBuilder: (context, i) {
-                         
                               return InkWell(
-                              
-                                    onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => Player(
-                                          song: data.song[i],
-                                          image: data.image,
-                                          title: data.title[i],
-                                          singer: data.singer,
-                                          album: data.album,
-                                        ))),
-                                
+                                onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => Player(
+                                              song: data.song[i],
+                                              image: data.image,
+                                              title: data.title[i],
+                                              singer: data.singer,
+                                              album: data.album,
+                                            ))),
                                 child: ListTile(
                                     leading: Container(
                                       height: 60,
@@ -137,15 +131,29 @@ class _SecondScreenState extends State<SecondScreen> {
                         );
                       }
                     }),
-                  
                   )
                 ],
+              ),
+              Positioned(
+                left: 10,
+                top: 20,
+                child: InkWell(
+                  onTap: () => Navigator.pop(context),
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30)),
+                    child: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
         ));
   }
 }
-
-
-

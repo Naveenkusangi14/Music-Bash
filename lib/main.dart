@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
       ],
       child:  GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        home: UploadPage(),
+        home: BottomNavigator(),
       ),
     );
   }

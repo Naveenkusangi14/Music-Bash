@@ -77,178 +77,220 @@ class UploadPage extends StatefulWidget {
 class _UploadPageState extends State<UploadPage> {
   String? _fileName;
   //String? _songPath;
-  Uint8List? _fileBytes;
+  Uint8List? _songBytes;
+  Uint8List? _imageBytes;
+  
    TextEditingController singer = TextEditingController();
    TextEditingController album = TextEditingController();
    TextEditingController title= TextEditingController();
+      TextEditingController category= TextEditingController();
 
-  Uint8List? _imageBytes;
+  
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Upload new song"),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(children: [
-            GestureDetector(
-              onTap: () async {
-                try {
-                  FilePickerResult? result =
-                      await FilePicker.platform.pickFiles();
-
-                  if (result != null) {
-                    _fileBytes = result.files.first.bytes;
-                    _fileName = result.files.first.name;
-               //      _songPath = result.files.first.path;
-                    setState(() {});
-                  }
-                } catch (e) {
-                  print(e);
-                }
-              },
-              child: Container(
-                height: 150,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    if (_fileBytes == null)
-                      const Icon(
-                        Icons.upload_rounded,
-                        size: 45,
-                        color: Colors.grey,
-                      )
-                    else
-                      const Icon(
-                        Icons.check_circle_outline_rounded,
-                        size: 45,
-                        color: Colors.green,
-                      ),
-                    const SizedBox(height: 10),
-                    Text(
-                      _fileName ?? "Choose a song to upload",
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      textAlign: TextAlign.center,
+    return Hero(
+      tag: 'upload',
+      child: Container(
+         decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.deepPurple.shade200.withOpacity(0.8),
+              Colors.deepPurple.shade700.withOpacity(0.8),
+            ],
+          ),
+        ),
+        child: Scaffold(
+           backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            backgroundColor:   Colors.deepPurple.shade700,
+            title: const Text("Upload new song"),
+          ),
+          body: SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                const  SizedBox(height: 20,),
+                GestureDetector(
+                  onTap: () async {
+                    try {
+                      FilePickerResult? result =
+                          await FilePicker.platform.pickFiles();
+      
+                      if (result != null) {
+                        _songBytes = result.files.first.bytes;
+                        _fileName = result.files.first.name;
+                   //      _songPath = result.files.first.path;
+                        setState(() {});
+                      }
+                    } catch (e) {
+                      print(e);
+                    }
+                  },
+                  child: Container(
+                    height: 150,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                  ],
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (_songBytes == null)
+                          const Icon(
+                            Icons.upload_rounded,
+                            size: 45,
+                            color: Colors.deepPurple,
+                          )
+                        else
+                          const Icon(
+                            Icons.check_circle_outline_rounded,
+                            size: 45,
+                            color: Colors.green,
+                          ),
+                        const SizedBox(height: 10),
+                        Text(
+                          _fileName ?? "Choose a song to upload",
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            TextFormField(
-              controller:singer,
-              decoration: const InputDecoration(
-                hintText: "Enter singer name",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                const SizedBox(height: 20),
+                TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  controller:singer,
+                  decoration: const InputDecoration(
+                    hintStyle: TextStyle(color: Colors.white),
+                    hintText: "Enter singer name",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                  ),
+      
                 ),
-              ),
-
-            ),
-            const SizedBox(height: 20),
-            TextFormField(
-              controller:album,
-              decoration: const InputDecoration(
-                hintText: "Enter song category",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                const SizedBox(height: 20),
+                TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  controller:category,
+                  decoration: const InputDecoration(
+                     hintStyle: TextStyle(color: Colors.white),
+                    hintText: "Enter song category",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                  ),
+                
                 ),
-              ),
-            
-            ),
-            TextFormField(
-              controller:title,
-              decoration: const InputDecoration(
-                hintText: "Enter song title",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-              ),
-          
-            ),
-            // TextFormField(
-            //   decoration: const InputDecoration(
-            //     hintText: "Enter album name",
-            //     border: OutlineInputBorder(
-            //       borderRadius: BorderRadius.all(Radius.circular(10)),
-            //     ),
-            //   ),
+                const SizedBox(height: 20),
+                TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  controller:title,
+                  decoration: const InputDecoration(
+                     hintStyle: TextStyle(color: Colors.white),
+                    hintText: "Enter song title",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                  ),
               
-            // ),
-            GestureDetector(
-              onTap: () async {
-                try {
-                  FilePickerResult? result =
-                      await FilePicker.platform.pickFiles(
-                    type: FileType.image,
-                  );
-
-                  if (result != null) {
-                    _imageBytes = result.files.first.bytes;
-                    setState(() {});
-                  }
-                } catch (e) {
-                  print(e);
-                }
-              },
-              child: Container(
-                height: 150,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(10),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    if (_imageBytes == null)
-                      const Icon(
-                        Icons.image_outlined,
-                        size: 45,
-                        color: Colors.grey,
-                      )
-                    else
-                      const Icon(
-                        Icons.check_circle_outline_rounded,
-                        size: 45,
-                        color: Colors.green,
-                      ),
-                    const SizedBox(height: 10),
-                    // ignore: prefer_const_constructors
-                    Text(
-                      "Choose an image for the song",
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      textAlign: TextAlign.center,
+                const SizedBox(height: 20,),
+                TextFormField(
+                  controller: album,
+                  style: TextStyle(color: Colors.white),
+                  decoration: const InputDecoration(
+                    hintText: "Enter album name",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
                     ),
-                  ],
+                  ),
+                  
                 ),
-              ),
+                  const SizedBox(height: 20),
+                GestureDetector(
+                  onTap: () async {
+                    try {
+                      FilePickerResult? result =
+                          await FilePicker.platform.pickFiles(
+                        type: FileType.image,
+                      );
+      
+                      if (result != null) {
+                        _imageBytes = result.files.first.bytes;
+                        setState(() {});
+                      }
+                    } catch (e) {
+                      print(e);
+                    }
+                  },
+                  child: Container(
+                    height: 150,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (_imageBytes == null)
+                          const Icon(
+                            Icons.image_outlined,
+                            size: 45,
+                            color: Colors.deepPurple,
+                          )
+                        else
+                          const Icon(
+                            Icons.check_circle_outline_rounded,
+                            size: 45,
+                            color: Colors.green,
+                          ),
+                        const SizedBox(height: 10),
+                        // ignore: prefer_const_constructors
+                        Text(
+                          "Choose an image for the song",
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 50),
+                InkWell(
+                  onTap: () {
+                    try {
+                      upload();
+                    } catch (e) {
+                      print(e);
+                    }
+                  },
+                  child:  Chip(
+                    padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 50),
+                    backgroundColor: Colors.white ,
+                    label: Text("Upload",style: TextStyle(
+                      color:Colors.deepPurple.shade700,fontSize: 22
+                    ),)),
+                )
+              ]),
             ),
-            InkWell(
-              onTap: () {
-                try {
-                  upload();
-                } catch (e) {
-                  print(e);
-                }
-              },
-              child: const Text("Upload"),
-            )
-          ]),
+          ),
         ),
       ),
     );
@@ -259,11 +301,14 @@ Future<void> upload() async {
     // Upload file
     await Databasehelper.instance.createsong(
         title: title.text,
-        image: '',
-        song: _fileBytes!,
+        image: _imageBytes!,
+        song: _songBytes!,
         singer: singer.text,
-        category: album.text,
-        songData: _fileBytes);
+        category: category.text,
+        songData: _songBytes,
+        imageData:_imageBytes,
+        album: album.text
+        );
 
     print('Song uploaded successfully!');
 
