@@ -16,6 +16,7 @@ class PopularArtist extends StatelessWidget {
    Random rand =  Random();
     final provider = Provider.of<SongsController>(context);
     return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
           'Popular Artist',

@@ -12,7 +12,9 @@ class SongsController extends ChangeNotifier {
   bool isLoading = false;
 
   List<SongsModel> _songs = [];
+  List<SongsModel> _topsix = [];
   List<SongsModel> get songs => _songs;
+  List<SongsModel> get topsix => _topsix;
 
   SongsController() {
     // Call init in constructor
@@ -28,34 +30,44 @@ class SongsController extends ChangeNotifier {
     _songs = await Databasehelper.instance.getsong();
     isLoading = false;
     notifyListeners();
+    print(_topsix.length);
+    print(_songs.length);
+    songs.map((e) {
+      print('object');
+      print(e);
+      if (e.category == 'Top six singers') {
+        print('yes');
+        _topsix.add(e);
+      }
+    }).toList();
+    print(_topsix.length);
   }
 
-  createSong({
-  required String title,
-  required String image,
-  required String song,
-  required String singer,
-  required String category,
-}) async {
-  try {
-    await Databasehelper.databases!.createDocument(
-      databaseId: '6405d62f38aea554bf4b',
-      collectionId: '6405d642c8e5331fadb7',
-      documentId: ID.unique(),
-      data: {
-        'title': title,
-        'song': song,
-        'image': image,
-        'singer': singer,
-        'category': category,
-      },
-    ).then((value) {
-      Get.snackbar('Song added', '', duration: Duration(seconds: 3));
-    });
-  } catch (e) {
-    Get.snackbar('Something went wrong', e.toString(),
-        duration: Duration(seconds: 5));
-  }
+//   createSong({
+//   required String title,
+//   required String image,
+//   required String song,
+//   required String singer,
+//   required String category,
+// }) async {
+//   try {
+//     await Databasehelper.databases!.createDocument(
+//       databaseId: '6405d62f38aea554bf4b',
+//       collectionId: '6405d642c8e5331fadb7',
+//       documentId: ID.unique(),
+//       data: {
+//         'title': title,
+//         'song': song,
+//         'image': image,
+//         'singer': singer,
+//         'category': category,
+//       },
+//     ).then((value) {
+//       Get.snackbar('Song added', '', duration: Duration(seconds: 3));
+//     });
+//   } catch (e) {
+//     Get.snackbar('Something went wrong', e.toString(),
+//         duration: Duration(seconds: 5));
+//   }
+// }
 }
-}
-

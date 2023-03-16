@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     // TOP SIX SINGERS
                     const TopSixSingers(),
                       const SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
                   
                     //  TELUGU SONG

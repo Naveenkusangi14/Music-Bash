@@ -12,6 +12,7 @@ class Hindi extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<SongsController>(context);
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
           'Hindi ',
