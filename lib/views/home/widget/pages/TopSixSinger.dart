@@ -5,14 +5,19 @@ import '../../../../SongsController/SongsController.dart';
 import 'package:provider/provider.dart';
 import '../../Secondpage.dart';
 
-class TopSixSingers extends StatelessWidget {
+class TopSixSingers extends StatefulWidget {
   const TopSixSingers({super.key});
 
+  @override
+  State<TopSixSingers> createState() => _TopSixSingersState();
+}
+
+class _TopSixSingersState extends State<TopSixSingers> {
   @override
   Widget build(BuildContext context) {
     
     final provider = Provider.of<SongsController>(context);
-
+     
     return SizedBox(
      
       child: GridView.builder(
@@ -25,6 +30,7 @@ class TopSixSingers extends StatelessWidget {
             mainAxisSpacing: 8,
             childAspectRatio: 3.2),
         itemBuilder: (context, index) {
+          
           final data = provider.topsix[index];
           List topsix = [];
           if (data.category == 'Top six singers') {
@@ -34,6 +40,8 @@ class TopSixSingers extends StatelessWidget {
               ? InkWell(
                   onTap: () {
                     Get.to(SecondScreen(url: data.image, album: data.album));
+                  
+                    
                   },
                   child: Container(
                     width: MediaQuery.of(context).size.width / 3,
@@ -59,10 +67,10 @@ class TopSixSingers extends StatelessWidget {
                         const SizedBox(
                           width: 10,
                         ),
-                        Container(
-                          width: MediaQuery.of(context).size.width / 4,
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width / 5,
                           height: 60,
-                          child: Text(data.singer,
+                          child: Text(data.singer[index],
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(

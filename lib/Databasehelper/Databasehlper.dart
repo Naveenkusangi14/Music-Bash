@@ -1,4 +1,3 @@
-import 'dart:html';
 import 'dart:typed_data';
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
@@ -19,6 +18,8 @@ class Databasehelper {
     storages = Storage(client as Client);
   }
 
+  List<String> uploadedsong = [];
+
   Future<void> createsong(
       {required List title,
       required Uint8List image,
@@ -31,12 +32,19 @@ class Databasehelper {
     databases ??= Databases(client as Client);
 
     try {
-      List song = songData.map((e) async {
-       await  uploadSong(e, title.map((f) => f).toList()); 
-   
-      }).toList();
+      // List song = songData.map((e) async {
+      //   await uploadSong(e, title);
+      // }).toList();
 
-      File image = await uploadImage(imageData, title.map((f) => f).toList());
+
+    for (int j = 0; j < songData.length; j++){
+      var i = songData[j];
+          File song = await uploadSong(i, album);
+           uploadedsong.add("http://139.59.85.104/v1/storage/buckets/6406d520472e86d75e96/files/${song.$id}/view?project=6405d4c4e20b265a259d&mode=admin");
+      }
+    
+      // File song = await uploadSong(songData[0], album);
+      File image = await uploadImage(imageData, album);
       await databases!.createDocument(
           databaseId: '6405d62f38aea554bf4b',
           collectionId: '6405d642c8e5331fadb7',
@@ -47,10 +55,7 @@ class Databasehelper {
             'image':
                 'http://139.59.85.104/v1/storage/buckets/6406d520472e86d75e96/files/${image.$id}/view?project=6405d4c4e20b265a259d&mode=admin',
             'album': album,
-            'song': song
-                .map((e) =>
-                    'http://139.59.85.104/v1/storage/buckets/6406d520472e86d75e96/files//view?project=6405d4c4e20b265a259d&mode=admin')
-                .toList(),
+            'song': uploadedsong,
             'title': title.toList()
           });
       Get.snackbar('Song added', '', duration: Duration(seconds: 3));

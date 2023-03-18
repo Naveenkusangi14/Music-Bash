@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ConstantTheme{
+class ConstantTheme {
   static const backgroundColor = Colors.black;
   static const headingColor = Colors.white;
   static const textColor = Colors.white;
@@ -9,7 +9,4 @@ class ConstantTheme{
   static const double textSize = 18;
   static const double headingSize = 24;
   static const double subTextSize = 14;
-
-  
 }
-

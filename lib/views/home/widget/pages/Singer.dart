@@ -46,7 +46,7 @@ class PopularArtist extends StatelessWidget {
                         child: InkWell(
                           onTap: () {
                             Get.to(
-                              SecondScreen(url: data.image, album: data.singer),
+                              SecondScreen(url: data.image, album: data.singer[index]),
                             );
                           },
                           child: Column(
@@ -84,7 +84,7 @@ class PopularArtist extends StatelessWidget {
                                   child: Container(
                                     width:
                                         MediaQuery.of(context).size.width / 2.5,
-                                    child: Text(data.singer,
+                                    child: Text(data.singer[index],
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(

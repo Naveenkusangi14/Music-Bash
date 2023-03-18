@@ -8,6 +8,7 @@ import 'package:spotify/SongsController/SongsController.dart';
 import 'package:spotify/views/home/home_screen.dart';
 import 'package:spotify/views/home/widget/bottomnavg.dart';
 
+import 'Controller/current_playing.dart';
 import 'views/home/widget/pages/upload_page.dart';
 
 Client client = Client();
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => SongsController()),
+        ChangeNotifierProvider(create: (_)=> CurrentPlaying())
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,

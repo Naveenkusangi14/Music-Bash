@@ -40,7 +40,7 @@ class SongsController extends ChangeNotifier {
         _topsix.add(e);
       }
     }).toList();
-    print(_topsix.length);
+    print(songs.length);
   }
 
 //   createSong({

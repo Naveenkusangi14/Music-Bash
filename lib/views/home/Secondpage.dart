@@ -2,9 +2,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:spotify/Player/Player.dart';
+import 'package:spotify/Controller/current_playing.dart';
+import 'package:spotify/views/Player/Player.dart';
 import 'package:spotify/SongsController/SongsController.dart';
 import 'package:spotify/views/home/widget/pages/upload_page.dart';
+
+import '../../widgets/current_playing_bottom.dart';
 
 class SecondScreen extends StatefulWidget {
   SecondScreen({super.key, required this.url, required this.album});
@@ -18,12 +21,16 @@ class _SecondScreenState extends State<SecondScreen> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<SongsController>(context);
+    final currentPlayingProvider = Provider.of<CurrentPlaying>(context);
 
+    print(currentPlayingProvider.currenttitle + 'working');
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
+        floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.deepPurple,
           heroTag: 'upload',
-          onPressed: () => Get.to(const UploadPage()),
+          onPressed: () {
+            Get.to(const UploadPage());
+          },
           child: const Icon(
             Icons.add,
             size: 32,
@@ -101,16 +108,21 @@ class _SecondScreenState extends State<SecondScreen> {
                             shrinkWrap: true,
                             itemBuilder: (context, i) {
                               return InkWell(
-                                onTap: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => Player(
-                                              song: data.song[i],
-                                              image: data.image,
-                                              title: data.title[i],
-                                              singer: data.singer,
-                                              album: data.album,
-                                            ))),
+                                onTap: () {
+                                  print(data.singer[i]);
+                                  print(data.title[i]);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => Player(
+                                                song: data.song[i],
+                                                image: data.image,
+                                                title: data.title[i],
+                                                singer: data.singer[i],
+                                                album: data.album,
+                                              )));
+                                  setState(() {});
+                                },
                                 child: ListTile(
                                     leading: Container(
                                       height: 60,
@@ -126,7 +138,7 @@ class _SecondScreenState extends State<SecondScreen> {
                                           color: Colors.white, fontSize: 22),
                                     ),
                                     subtitle: Text(
-                                      data.singer,
+                                      data.singer[i],
                                       style: TextStyle(
                                           color: Colors.white.withOpacity(0.5),
                                           fontSize: 18),
@@ -148,7 +160,9 @@ class _SecondScreenState extends State<SecondScreen> {
                 left: 10,
                 top: 20,
                 child: InkWell(
-                  onTap: () => Navigator.pop(context),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
                   child: Container(
                     width: 50,
                     height: 50,
@@ -162,9 +176,21 @@ class _SecondScreenState extends State<SecondScreen> {
                   ),
                 ),
               ),
+              (currentPlayingProvider.currenttitle.isNotEmpty)
+                  ? Positioned(
+                      bottom: 0,
+                      child: CurrentPlayerBottom(
+                        song: currentPlayingProvider.currentsong,
+                        image: currentPlayingProvider.currentimage,
+                        singer: currentPlayingProvider.currentsinger,
+                        title: currentPlayingProvider.currenttitle,
+                      ))
+                  : SizedBox(
+                      height: 0,
+                      width: 0,
+                    )
             ],
           ),
-        )
-        );
+        ));
   }
 }

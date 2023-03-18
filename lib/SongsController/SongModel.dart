@@ -19,7 +19,7 @@ class SongsModel {
    // String album;
     List title;
     String image;
-    String singer;
+    List singer;
     List song;
     String album;
 

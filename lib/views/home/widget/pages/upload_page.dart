@@ -355,14 +355,7 @@ class _UploadPageState extends State<UploadPage> {
           imageData: _imageBytes,
           album: album.text);
 
-      print('Song uploaded successfully!');
-
-      // Navigate back to home screen
-      // ignore: use_build_context_synchronously
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const HomeScreen()),
-      );
+     
     } catch (e) {
       print('Error uploading song: $e');
     }

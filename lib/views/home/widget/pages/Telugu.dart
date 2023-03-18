@@ -6,9 +6,14 @@ import '../../../../time/Timeconstant.dart';
 
 import '../../Secondpage.dart';
 
-class Telugu extends StatelessWidget {
+class Telugu extends StatefulWidget {
   const Telugu({super.key});
 
+  @override
+  State<Telugu> createState() => _TeluguState();
+}
+
+class _TeluguState extends State<Telugu> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<SongsController>(context);
@@ -40,6 +45,8 @@ class Telugu extends StatelessWidget {
                         onTap: () {
                           Get.to(
                               SecondScreen(url: data.image, album: data.album));
+                              
+                            
                         },
                         child: Column(
                           children: [

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class PositionSeekWidget extends StatefulWidget {
@@ -7,6 +6,7 @@ class PositionSeekWidget extends StatefulWidget {
   final Function(Duration) seekTo;
 
   const PositionSeekWidget({
+    super.key,
     required this.currentPosition,
     required this.duration,
     required this.seekTo,
@@ -44,8 +44,6 @@ class _PositionSeekWidgetState extends State<PositionSeekWidget> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          
-          
           Slider(
             min: 0,
             max: widget.duration.inMilliseconds.toDouble(),
@@ -68,18 +66,16 @@ class _PositionSeekWidgetState extends State<PositionSeekWidget> {
               });
             },
           ),
-
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(durationToString(widget.currentPosition)),
-               Text(durationToString(widget.duration))
+                Text(durationToString(widget.duration))
               ],
             ),
           )
-         
         ],
       ),
     );
