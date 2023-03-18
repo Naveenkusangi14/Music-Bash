@@ -47,7 +47,7 @@ class English extends StatelessWidget {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Container(
-                                width: 200,
+                                width: 150,
                                 height: 150,
                                 child:
                                     Image.network(data.image, fit: BoxFit.cover),
@@ -60,7 +60,7 @@ class English extends StatelessWidget {
                               data.album,
                               style: const TextStyle(
                                 color: ConstantColors.titleColor,
-                                fontWeight: FontWeight.bold,
+                     
                                 fontSize: 18,
                               ),
                             ),

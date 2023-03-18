@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:spotify/time/Timeconstant.dart';
 import '../../../../SongsController/SongsController.dart';
-import '../../../controllers/SongsController.dart';
+
 import '../../Secondpage.dart';
 
 class Hindi extends StatelessWidget {
@@ -12,6 +12,7 @@ class Hindi extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<SongsController>(context);
     return Column(
+      
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
@@ -24,6 +25,7 @@ class Hindi extends StatelessWidget {
         ),
       const  SizedBox(height: 10,),
         SizedBox(
+          
           height: 180,
           child: ListView.builder(
             physics: const BouncingScrollPhysics(),
@@ -45,7 +47,7 @@ class Hindi extends StatelessWidget {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: Container(
-                              width: 200,
+                              width: 150,
                               height: 150,
                               child: Image.network(data.image,
                                   fit: BoxFit.cover),
@@ -58,7 +60,7 @@ class Hindi extends StatelessWidget {
                             data.album,
                             style: const TextStyle(
                               color: ConstantColors.titleColor,
-                              fontWeight: FontWeight.bold,
+                              
                               fontSize: 18,
                             ),
                           ),
@@ -72,6 +74,7 @@ class Hindi extends StatelessWidget {
             },
           ),
         ),
+        
       ],
     );
   }

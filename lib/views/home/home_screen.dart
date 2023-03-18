@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.deepPurple,
           heroTag: 'upload',
-          onPressed: () => Get.to(const UploadPage()),
+          onPressed: () => Get.to( UploadPage()),
           child: const Icon(
             Icons.add,
             size: 32,
@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     // TOP SIX SINGERS
                     const TopSixSingers(),
                       const SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                   
                     //  TELUGU SONG
@@ -85,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 10,
                     ),
           // PopularArtist
-                    const PopularArtist(),
+                     PopularArtist(scrollDirection: Axis.horizontal,height: 140,),
                   ],
                 ),
               ),

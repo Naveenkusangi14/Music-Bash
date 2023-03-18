@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../SongsController/SongsController.dart';
-import '../../../controllers/SongsController.dart';
+
 import 'package:provider/provider.dart';
 import '../../Secondpage.dart';
 
@@ -14,7 +14,7 @@ class TopSixSingers extends StatelessWidget {
     final provider = Provider.of<SongsController>(context);
 
     return SizedBox(
-      height: MediaQuery.of(context).size.height / 2,
+     
       child: GridView.builder(
         physics: const BouncingScrollPhysics(),
         shrinkWrap: true,
@@ -23,7 +23,7 @@ class TopSixSingers extends StatelessWidget {
             crossAxisCount: 2,
             crossAxisSpacing: 8,
             mainAxisSpacing: 8,
-            childAspectRatio: 12 / 5),
+            childAspectRatio: 3.2),
         itemBuilder: (context, index) {
           final data = provider.topsix[index];
           List topsix = [];
@@ -41,10 +41,13 @@ class TopSixSingers extends StatelessWidget {
                         color: Colors.deepPurple.shade400.withOpacity(0.8),
                         borderRadius: BorderRadius.circular(8)),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
-                          width: 60,
-                          height: 60,
+                          
+                          width: 50,
+                          height: 50,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: Image.network(
@@ -57,15 +60,13 @@ class TopSixSingers extends StatelessWidget {
                           width: 10,
                         ),
                         Container(
-                          width: MediaQuery.of(context).size.width / 6,
+                          width: MediaQuery.of(context).size.width / 4,
                           height: 60,
-                          child: Center(
-                            child: Text(data.singer,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                    color: Colors.white, fontSize: 18)),
-                          ),
+                          child: Text(data.singer,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 16)),
                         ),
                       ],
                     ),

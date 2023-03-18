@@ -20,32 +20,38 @@ class Databasehelper {
   }
 
   Future<void> createsong(
-      {required String title,
+      {required List title,
       required Uint8List image,
-      required Uint8List song,
-      required String singer,
+      required List<Uint8List> song,
+      required List singer,
       required String category,
-      required songData,
+      required List songData,
       required imageData,
       required String album}) async {
     databases ??= Databases(client as Client);
 
     try {
-      File song = await uploadSong(songData, title);
-      File image = await uploadImage(imageData, title);
+      List song = songData.map((e) async {
+       await  uploadSong(e, title.map((f) => f).toList()); 
+   
+      }).toList();
+
+      File image = await uploadImage(imageData, title.map((f) => f).toList());
       await databases!.createDocument(
           databaseId: '6405d62f38aea554bf4b',
           collectionId: '6405d642c8e5331fadb7',
           documentId: ID.unique(),
           data: {
-            'Singer': singer,
+            'Singer': singer.toList(),
             'category': category,
-            'image': 'http://139.59.85.104/v1/storage/buckets/6406d520472e86d75e96/files/${image.$id}/view?project=6405d4c4e20b265a259d&mode=admin',
+            'image':
+                'http://139.59.85.104/v1/storage/buckets/6406d520472e86d75e96/files/${image.$id}/view?project=6405d4c4e20b265a259d&mode=admin',
             'album': album,
-            'song': [
-              'http://139.59.85.104/v1/storage/buckets/6406d520472e86d75e96/files/${song.$id}/view?project=6405d4c4e20b265a259d&mode=admin'
-            ],
-            'title': [title]
+            'song': song
+                .map((e) =>
+                    'http://139.59.85.104/v1/storage/buckets/6406d520472e86d75e96/files//view?project=6405d4c4e20b265a259d&mode=admin')
+                .toList(),
+            'title': title.toList()
           });
       Get.snackbar('Song added', '', duration: Duration(seconds: 3));
     } catch (e) {

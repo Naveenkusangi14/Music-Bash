@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:spotify/Player/Player.dart';
 import 'package:spotify/SongsController/SongsController.dart';
+import 'package:spotify/views/home/widget/pages/upload_page.dart';
 
 class SecondScreen extends StatefulWidget {
   SecondScreen({super.key, required this.url, required this.album});
@@ -19,6 +20,15 @@ class _SecondScreenState extends State<SecondScreen> {
     final provider = Provider.of<SongsController>(context);
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.deepPurple,
+          heroTag: 'upload',
+          onPressed: () => Get.to(const UploadPage()),
+          child: const Icon(
+            Icons.add,
+            size: 32,
+          ),
+        ),
         extendBodyBehindAppBar: false,
         body: SafeArea(
           child: Stack(
@@ -154,6 +164,7 @@ class _SecondScreenState extends State<SecondScreen> {
               ),
             ],
           ),
-        ));
+        )
+        );
   }
 }

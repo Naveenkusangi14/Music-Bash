@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spotify/views/search/search.dart';
 import '../home_screen.dart';
 
 class BottomNavigator extends StatefulWidget {
@@ -10,7 +11,7 @@ class BottomNavigator extends StatefulWidget {
 
 class _BottomNavigatorState extends State<BottomNavigator> {
    int _selectedIndex = 0;
-  final List<Widget> _pages = [ const HomeScreen()];
+  final List<Widget> _pages = [ const HomeScreen() , SearchPage()];
   @override
   Widget build(BuildContext context) {
     // ignore: prefer_const_constructors
