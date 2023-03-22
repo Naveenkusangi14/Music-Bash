@@ -6,11 +6,11 @@ import 'package:spotify/Controller/current_playing.dart';
 import 'package:spotify/views/Player/Player.dart';
 import 'package:spotify/SongsController/SongsController.dart';
 import 'package:spotify/views/home/widget/pages/upload_page.dart';
-
 import '../../widgets/current_playing_bottom.dart';
 
 class SecondScreen extends StatefulWidget {
-  SecondScreen({super.key, required this.url, required this.album});
+  SecondScreen({Key? key, required this.url, required this.album})
+      : super(key: key);
   String url;
   String album;
   @override
@@ -90,7 +90,8 @@ class _SecondScreenState extends State<SecondScreen> {
                   ),
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
-                        childCount: provider.songs.length, (context, index) {
+                        childCount: provider.songs.length, 
+                        (context, index) {
                       final data = provider.songs[index];
                       if ((data.album == widget.album)) {
                         final songList = [];
@@ -107,6 +108,7 @@ class _SecondScreenState extends State<SecondScreen> {
                             itemCount: songList.length,
                             shrinkWrap: true,
                             itemBuilder: (context, i) {
+                        //    if (songList.isNotEmpty && titleList.isNotEmpty && data.singer.isNotEmpty && data.album.isNotEmpty && songList.length > i && titleList.length > i && data.singer.length > i) {
                               return InkWell(
                                 onTap: () {
                                   print(data.singer[i]);
@@ -142,15 +144,15 @@ class _SecondScreenState extends State<SecondScreen> {
                                       style: TextStyle(
                                           color: Colors.white.withOpacity(0.5),
                                           fontSize: 18),
-                                    )),
+                                    ),
+                                    ),
                               );
-                            },
+                            } 
+                            // },
                           ),
                         );
                       } else {
-                        return SizedBox(
-                          width: 0,
-                        );
+                        return SizedBox( width: 0);
                       }
                     }),
                   )

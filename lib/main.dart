@@ -4,6 +4,9 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:spotify/Databasehelper/Auth_Helper.dart';
+import 'package:spotify/Mainpage/login.dart';
+import 'package:spotify/Mainpage/welcomepage.dart';
 import 'package:spotify/SongsController/SongsController.dart';
 import 'package:spotify/views/home/home_screen.dart';
 import 'package:spotify/views/home/widget/bottomnavg.dart';
@@ -25,16 +28,16 @@ void main() {
           status:
               true); // For self signed certificates, only use for development
 
-  // runApp(
-  //   DevicePreview(
-  //     enabled: true,
-  //     tools: const [
-  //       ...DevicePreview.defaultTools,
-  //     ],
-  //     builder: (context) => const MyApp(),
-  //   ),
-  // );
-  runApp(const MyApp());
+  runApp(
+    DevicePreview(
+      enabled: true,
+      tools: const [
+        ...DevicePreview.defaultTools,
+      ],
+      builder: (context) => const MyApp(),
+    ),
+  );
+  //runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -45,11 +48,12 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => SongsController()),
-        ChangeNotifierProvider(create: (_)=> CurrentPlaying())
+        ChangeNotifierProvider(create: (_)=> CurrentPlaying()),
+        Provider(create: (context) => AuthHelper())
       ],
-      child: GetMaterialApp(
+      child: const GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        home: BottomNavigator(),
+        home: GetStartedPage(),
       ),
     );
   }
