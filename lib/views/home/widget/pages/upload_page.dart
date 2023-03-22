@@ -61,7 +61,7 @@
 // }
 
 //update code
-import 'dart:typed_data';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -120,19 +120,17 @@ class _UploadPageState extends State<UploadPage> {
                         try {
                           FilePickerResult? result = await FilePicker.platform
                               .pickFiles(allowMultiple: true);
-                          print(result!.files.length);
-                          if (result != null) {
-                            result.files
-                                .map(((e) => _songBytes.add(e.bytes!)))
-                                .toList();
-                            result.files
-                                .map(((e) => _fileName.add(e.name)))
-                                .toList();
+                          if (result!.files.isNotEmpty) {
+                            result.files.map(((e) {
+                              _songBytes.add(e.bytes!);
+                              _fileName.add(e.name);
+                            })).toList();
+
                             //      _songPath = result.files.first.path;
                             setState(() {});
                           }
                         } catch (e) {
-                          print(e);
+                          return;
                         }
                       },
                       child: Container(
@@ -145,25 +143,24 @@ class _UploadPageState extends State<UploadPage> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            if (_songBytes.isEmpty)
-                              const Icon(
-                                Icons.upload_rounded,
-                                size: 45,
-                                color: Colors.deepPurple,
-                              )
-                            else
-                              const Icon(
-                                Icons.check_circle_outline_rounded,
-                                size: 45,
-                                color: Colors.green,
-                              ),
+                            (_songBytes.isEmpty)
+                                ? const Icon(
+                                    Icons.upload_rounded,
+                                    size: 45,
+                                    color: Colors.deepPurple,
+                                  )
+                                : const Icon(
+                                    Icons.check_circle_outline_rounded,
+                                    size: 45,
+                                    color: Colors.green,
+                                  ),
                             const SizedBox(height: 10),
                             (_fileName.isNotEmpty)
                                 ? SizedBox(
                                     height: 80,
                                     child: ListView.builder(
                                         shrinkWrap: true,
-                                        itemCount: _fileName!.length,
+                                        itemCount: _fileName.length,
                                         itemBuilder: (context, index) {
                                           return Text(
                                             _fileName[index],
@@ -196,6 +193,7 @@ class _UploadPageState extends State<UploadPage> {
                           itemCount: _fileName.length,
                           itemBuilder: (context, index) {
                             return TextFormField(
+                               
                               style: const TextStyle(color: Colors.white),
                               onFieldSubmitted: (value) {
                                 singer.add(value);
@@ -354,8 +352,6 @@ class _UploadPageState extends State<UploadPage> {
           songData: _songBytes,
           imageData: _imageBytes,
           album: album.text);
-
-     
     } catch (e) {
       print('Error uploading song: $e');
     }

@@ -22,8 +22,6 @@ class _SecondScreenState extends State<SecondScreen> {
   Widget build(BuildContext context) {
     final provider = Provider.of<SongsController>(context);
     final currentPlayingProvider = Provider.of<CurrentPlaying>(context);
-
-    print(currentPlayingProvider.currenttitle + 'working');
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.deepPurple,
@@ -72,7 +70,7 @@ class _SecondScreenState extends State<SecondScreen> {
                       padding: const EdgeInsets.all(10.0),
                       child: Align(
                         alignment: Alignment.centerLeft,
-                        child: Container(
+                        child: SizedBox(
                           width: MediaQuery.of(context).size.width,
                           height: 60,
                           child: Text(
@@ -90,43 +88,42 @@ class _SecondScreenState extends State<SecondScreen> {
                   ),
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
-                        childCount: provider.songs.length, 
-                        (context, index) {
+                        childCount: provider.songs.length, (context, index) {
                       final data = provider.songs[index];
                       if ((data.album == widget.album)) {
                         final songList = [];
                         final titleList = [];
+                         final singerList = [];
                         data.song.map((e) {
                           songList.add(e);
                         }).toList();
                         data.title.map((e) {
                           titleList.add(e);
                         }).toList();
-                        print(songList.length);
+                         data.singer.map((e) {
+                          singerList.add(e);
+                        }).toList();
                         return SizedBox(
                           child: ListView.builder(
-                            itemCount: songList.length,
-                            shrinkWrap: true,
-                            itemBuilder: (context, i) {
-                        //    if (songList.isNotEmpty && titleList.isNotEmpty && data.singer.isNotEmpty && data.album.isNotEmpty && songList.length > i && titleList.length > i && data.singer.length > i) {
-                              return InkWell(
-                                onTap: () {
-                                  print(data.singer[i]);
-                                  print(data.title[i]);
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) => Player(
-                                                song: data.song[i],
-                                                image: data.image,
-                                                title: data.title[i],
-                                                singer: data.singer[i],
-                                                album: data.album,
-                                              )));
-                                  setState(() {});
-                                },
-                                child: ListTile(
-                                    leading: Container(
+                              itemCount: songList.length,
+                              shrinkWrap: true,
+                              itemBuilder: (context, i) {
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => Player(
+                                                  song: songList[i],
+                                                  image: data.image,
+                                                  title: titleList[i],
+                                                  singer: singerList[i],
+                                                  album: data.album,
+                                                )));
+                                    setState(() {});
+                                  },
+                                  child: ListTile(
+                                    leading: SizedBox(
                                       height: 60,
                                       width: 60,
                                       child: Image.network(
@@ -136,7 +133,7 @@ class _SecondScreenState extends State<SecondScreen> {
                                     ),
                                     title: Text(
                                       titleList[i],
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color: Colors.white, fontSize: 22),
                                     ),
                                     subtitle: Text(
@@ -145,14 +142,14 @@ class _SecondScreenState extends State<SecondScreen> {
                                           color: Colors.white.withOpacity(0.5),
                                           fontSize: 18),
                                     ),
-                                    ),
-                              );
-                            } 
-                            // },
-                          ),
+                                  ),
+                                );
+                              }
+                              // },
+                              ),
                         );
                       } else {
-                        return SizedBox( width: 0);
+                        return const SizedBox(width: 0);
                       }
                     }),
                   )
@@ -187,7 +184,7 @@ class _SecondScreenState extends State<SecondScreen> {
                         singer: currentPlayingProvider.currentsinger,
                         title: currentPlayingProvider.currenttitle,
                       ))
-                  : SizedBox(
+                  : const SizedBox(
                       height: 0,
                       width: 0,
                     )
